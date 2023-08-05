@@ -5,6 +5,7 @@ __pycache__/
 *.lic
 # C extensions
 *.so
+*.DS_Store
 
 .lic
 
