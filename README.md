@@ -27,7 +27,7 @@ or have any suggestions by submitting an issue.
 
 
 ### Documentation
-[You can find the docs for Saturn here.](https://saturn.readthedocs.io/en/latest/).
+[You can find the docs for Saturn here](https://saturn.readthedocs.io/en/latest/).
 
 ### Citations
 If you use this system in an academic work, please cite our [tech report](https://adalabucsd.github.io/papers/TR_2023_Saturn.pdf) as follows.
