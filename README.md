@@ -1,7 +1,6 @@
 [![Documentation Status](https://readthedocs.org/projects/saturn/badge/?version=latest)](https://saturn.readthedocs.io/en/latest/?badge=latest)
 
-Saturn: Optimized Multi-Model Deep Learning
----
+# Saturn: Optimized Multi-Model Deep Learning
 Saturn is a novel system for multi-model deep learning training that automatically optimizes jobs for highly efficient training.
 It automatically selects parallelization techniques, determines optimized resource allocations, and constructs execution schedules
 for submitted jobs. Applying Saturn for hyperparameter optimization or model selection requires only a few lines of code.
@@ -27,10 +26,17 @@ new interfaces, dashboards, and ways to support online job submissions. Please l
 or have any suggestions by submitting an issue.
 
 
+### Documentation
+[You can find the docs for Saturn here.](https://saturn.readthedocs.io/en/latest/).
+
 ### Citations
-This work is still under development and at the prototype phase. Unexpected behaviors may occur.
-
-
+If you use this system in an academic work, please cite our [tech report](https://adalabucsd.github.io/papers/TR_2023_Saturn.pdf) as follows.
+```
+@article{nagrechasaturn,
+  title={Saturn: An Optimized Data System for Multi-Large-Model Deep Learning Workloads (Information System Architectures)},
+  author={Nagrecha, Kabir and Kumar, Arun}
+}
+```
 ### The Team
 Saturn is currently developed and maintained by Kabir Nagrecha at UCSD.
 
