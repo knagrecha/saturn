@@ -111,6 +111,9 @@ class Task:
         self.saved_dataloader = None
         self.name = name
         self.save_dir = save_dir
+        
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
     
         self.strategies = {}
         self.selected_strategy = None
@@ -145,20 +148,20 @@ class Task:
                                               string.digits, k=32))
 
     def save(self, model):
-        print("Saving model {}".format(self.name))
-        torch.save(model, ".models/{}.pt".format(self.name))
-        print("Saved model {}".format(self.name))
+        print("Saving model {}/{}".format(self.save_dir, self.name))
+        torch.save(model, "{}/{}.pt".format(self.save_dir, self.name))
+        print("Saved model {}/{}".format(self.save_dir, self.name))
 
     def reconfigure(self, batch_count):
         self.current_batch = (self.current_batch +
                               batch_count) % self.epoch_length
 
     def has_ckpt(self):
-        return os.path.isfile('.models/{}.pt'.format(self.name))
+        return os.path.isfile('{}/{}.pt'.format(self.save_dir, self.name))
 
     def get_model(self, fresh=False):
-        if os.path.isfile('.models/{}.pt'.format(self.name)) and not fresh:
-            return torch.load(".models/{}.pt".format(self.name))
+        if os.path.isfile('{}/{}.pt'.format(self.save_dir, self.name)) and not fresh:
+            return torch.load("{}/{}.pt".format(self.save_dir, self.name))
         else:
             if self.hparams.kwargs is not None and len(self.hparams.kwargs) > 0:
                 return self.internal_get_model(self.hparams.kwargs)

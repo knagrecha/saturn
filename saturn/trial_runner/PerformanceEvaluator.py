@@ -58,7 +58,7 @@ def search(tasks, executor_names=None, log=False):
         executors = retrieve(executor_names)
     if not ray.is_initialized():
         context = ray.init(num_gpus=torch.cuda.device_count(), resources={"node_0": 10000},
-                           include_dashboard=True, configure_logging=True, logging_level='critical')  # just some arbitrarily high number
+                           include_dashboard=True, configure_logging=True, logging_level='info')  # just some arbitrarily high number
         
     flattened_results = []
     cpus_per_node = [(3 * int(x['Resources']['CPU']) // 4) for x in ray.nodes()]
