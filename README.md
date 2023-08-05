@@ -26,10 +26,10 @@ new interfaces, dashboards, and ways to support online job submissions. Please l
 or have any suggestions by submitting an issue.
 
 
-### Documentation
+## Documentation
 [You can find the docs for Saturn here](https://saturn.readthedocs.io/en/latest/).
 
-### Citations
+## How to Cite this Work
 If you use this system in an academic work, please cite our [tech report](https://adalabucsd.github.io/papers/TR_2023_Saturn.pdf) as follows.
 ```
 @article{nagrechasaturn,
