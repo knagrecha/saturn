@@ -160,7 +160,10 @@ class Task:
         if os.path.isfile('.models/{}.pt'.format(self.name)) and not fresh:
             return torch.load(".models/{}.pt".format(self.name))
         else:
-            return self.internal_get_model(self.hparams.kwargs)
+            if self.hparams.kwargs is not None and len(self.hparams.kwargs) > 0:
+                return self.internal_get_model(self.hparams.kwargs)
+            else:
+                return self.internal_get_model()
 
     def select_strategy(self, strat: Strategy):
         self.selected_strategy = strat
