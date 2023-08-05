@@ -41,6 +41,6 @@ If you use this system in an academic work, please cite our [tech report](https:
 Saturn is currently developed and maintained by Kabir Nagrecha at UCSD.
 
 ### License
-Saturn uses Apache License 2.0
+Saturn uses Apache License 2.0.
 
 
