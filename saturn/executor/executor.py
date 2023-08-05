@@ -50,13 +50,13 @@ class ExecutorActor:
 		ray.get(self.global_dependency_holder.set_task_started.remote(tid))
 		
 		executor = task.selected_strategy.executor
-		print("Marking task {} as started with executor {}.".format(task.name, executor))
+		#print("Marking task {} as started with executor {}.".format(task.name, executor))
 		# task.setup()
 		executor.execute(task, [_ for _ in range(
 			0, task.selected_strategy.gpu_apportionment)], tid, batch_count)
 		task.reconfigure(batch_count)
 		ray.get(self.global_dependency_holder.set_task_complete.remote(tid))
-		print("Marking task {} as completed for the current interval.".format(task.name))
+		#print("Marking task {} as completed for the current interval.".format(task.name))
 
 
 def execute(relevant_tasks, batches_to_run, interval, node_per_task, task_dependency_dict):
