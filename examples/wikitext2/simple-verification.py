@@ -11,15 +11,15 @@
 # limitations under the License.
 # ==============================================================================
 
-from ..models.GPTJ import get_model as getGPTJ, GPTJBlock, GPTJMLP, pretraining_loss
+from examples.wikitext2.models.GPTJ import get_model as getGPTJ, GPTJBlock, GPTJMLP, pretraining_loss
 
-from ..dataloaders.dataloaders import get_loader
+from examples.wikitext2.dataloaders import get_loader
 from saturn.core.representations import Task, HParams
-from transformers import GPT2Tokenizer, AutoTokenizer
+from transformers import AutoTokenizer
 
-from ..executors.FSDP import FSDPExecutor
-from ..executors.Pipeline import PipelineExecutor
-from ..executors.Spilled import SpilledExecutor
+from examples.wikitext2.executors.FSDP import FSDPExecutor
+from examples.wikitext2.executors.Pipeline import PipelineExecutor
+from examples.wikitext2.executors.Spilled import SpilledExecutor
 import unittest
 from saturn.library import register
 
