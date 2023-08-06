@@ -76,7 +76,6 @@ class DDPExecutor(BaseTechnique):
             return None, None
           
         except Exception as e:
-            print(e)
             raise e
 
     def trial(rank, world_size, model, task, gpu_list, q, tid):
@@ -115,7 +114,6 @@ class DDPExecutor(BaseTechnique):
             if rank == 0:
                 q.put(time_taken)
         except Exception as e:
-            print(e)
             raise e
 
     def gen_dataloader(rank, world_size, old):

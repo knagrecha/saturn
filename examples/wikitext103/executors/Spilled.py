@@ -65,7 +65,6 @@ class SpilledExecutor(BaseTechnique):
                                 time_taken = timer() - st
                     except Exception as e:
                         if "memory" in str(e):
-                            print("OOM!")
                             oom = True
                             model.cpu()
                         else:
@@ -85,8 +84,6 @@ class SpilledExecutor(BaseTechnique):
                         torch.cuda.empty_cache()
                     return not oom, time_taken
                 except Exception as e:
-                    print(e)
-                    traceback.print_exc()
                     raise e
 
             total_layers = len(list(model.children()))
@@ -108,7 +105,6 @@ class SpilledExecutor(BaseTechnique):
 
             return None, None
         except Exception as e:
-            print(e)
             raise e
 
     @processify
@@ -151,6 +147,5 @@ class SpilledExecutor(BaseTechnique):
                 optimizer.zero_grad()
 
         except Exception as e:
-            print(e)
             raise e
         task.save(model)

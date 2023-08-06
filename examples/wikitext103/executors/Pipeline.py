@@ -161,5 +161,4 @@ class PipelineExecutor(BaseTechnique):
             else:
                 return {"microbatch_count": curr_microbatch_count, "balance": curr_balance}, pipeline_latency
         except Exception as e:
-            print(e)
             raise e

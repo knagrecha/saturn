@@ -100,7 +100,6 @@ class FSDPExecutor(BaseTechnique):
 
             return None, None
         except Exception as e:
-            print(e)
             raise e
 
     def trial(rank, world_size, model, task, gpu_list, execution_parameters, q, tid):
@@ -154,7 +153,6 @@ class FSDPExecutor(BaseTechnique):
             if rank == 0:
                 q.put(time_taken)
         except Exception as e:
-            print(e)
             raise e
 
     def gen_dataloader(rank, world_size, old):
@@ -242,7 +240,6 @@ class FSDPExecutor(BaseTechnique):
             optimizer.zero_grad()
         
         dist.barrier()
-        print("Loading FSDP state for saving...")
         save_policy = FullStateDictConfig(offload_to_cpu=True, rank0_only=True)
         with FSDP.state_dict_type(fsdp_model, StateDictType.FULL_STATE_DICT, save_policy):
             cpu_state = fsdp_model.state_dict()
