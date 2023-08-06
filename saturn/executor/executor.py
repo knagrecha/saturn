@@ -50,13 +50,13 @@ class ExecutorActor:
 		ray.get(self.global_dependency_holder.set_task_started.remote(tid))
 		
 		executor = task.selected_strategy.executor
-		#print("Marking task {} as started with executor {}.".format(task.name, executor))
+		print("Marking task {} as started with executor {} on {}.".format(task.name, executor, ray.get_gpu_ids()))
 		# task.setup()
 		executor.execute(task, [_ for _ in range(
 			0, task.selected_strategy.gpu_apportionment)], tid, batch_count)
 		task.reconfigure(batch_count)
 		ray.get(self.global_dependency_holder.set_task_complete.remote(tid))
-		#print("Marking task {} as completed for the current interval.".format(task.name))
+		print("Marking task {} as completed for the current interval.".format(task.name))
 
 
 def execute(relevant_tasks, batches_to_run, interval, node_per_task, task_dependency_dict):
@@ -102,6 +102,7 @@ def execute(relevant_tasks, batches_to_run, interval, node_per_task, task_depend
 			if ready:
 				logging.info("Task {} is ready to launch. Launching ray execute.".format(r.name))
 				ratio_cpu_gpu = max(1, cpus_per_node[node_per_task[r]] // gpus_per_node[node_per_task[r]])
+				logging.info("Task {} will receive {} CPUs and {} GPUs.".format(r.name, r.selected_strategy.gpu_apportionment * ratio_cpu_gpu, r.selected_strategy.gpu_apportionment))
 				exec_actor = ExecutorActor.options(
 					num_cpus=r.selected_strategy.gpu_apportionment * ratio_cpu_gpu,
 					num_gpus=r.selected_strategy.gpu_apportionment,

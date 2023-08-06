@@ -18,7 +18,7 @@ import ray
 from timeit import default_timer as timer
 import logging
 
-@ray.remote
+@ray.remote(max_calls=1)
 def ray_search(executor, task, gpu_range, tid):
     print("Starting Trial of Task: {}, Executor: {}, GPUs: {}".format(task.name, executor.name, ray.get_gpu_ids()))
     params, total_time = executor.search(task, gpu_range, tid)
@@ -100,7 +100,7 @@ def search(tasks, executor_names=None, log=False):
                 (params, runtime) = collected_flat_results[flat_idx]
                 flat_idx += 1
                 if params is not None:
-                    if chosen_runtime is None or runtime < chosen_runtime:
+                    if chosen_runtime == float("inf") or runtime < chosen_runtime:
                         chosen_executor = exec
                         chosen_parameters = params
                         chosen_runtime = runtime
