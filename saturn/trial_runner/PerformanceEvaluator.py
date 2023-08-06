@@ -20,11 +20,11 @@ import logging
 
 @ray.remote
 def ray_search(executor, task, gpu_range, tid):
-    print("Trial of {} on {} with GPUs {}".format(task.name, executor, ray.get_gpu_ids()))
+    print("Starting Trial of Task: {}\n\tExecutor: {}\n\tGPUs: {}".format(task.name, executor, ray.get_gpu_ids()))
     params, total_time = executor.search(task, gpu_range, tid)
     if params is not None:
         total_time = total_time * task.total_batches
-    print("COMPLETED trial of {} on {} with GPUs {}".format(task.name, executor, ray.get_gpu_ids()))
+    print("Finishing Trial of Task: {}\n\tExecutor: {}\n\tGPUs: {}".format(task.name, executor, ray.get_gpu_ids()))
     return params, total_time
 
 
@@ -61,8 +61,6 @@ def search(tasks, executor_names=None, log=False):
     if not ray.is_initialized():
         context = ray.init(dashboard_host="0.0.0.0", num_gpus=torch.cuda.device_count(), resources={"node_0": 10000},
                            include_dashboard=True, configure_logging=True, logging_level='critical')  # just some arbitrarily high number
-        print(context.dashboard_url)
-        print("Available GPUs: {}".format([int(x['Resources']['GPU']) for x in ray.nodes()]))
     flattened_results = []
     cpus_per_node = [(3 * int(x['Resources']['CPU']) // 4) for x in ray.nodes()]
     gpus_per_node = [int(x['Resources']['GPU']) for x in ray.nodes()]

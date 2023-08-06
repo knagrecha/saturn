@@ -17,6 +17,8 @@ from timeit import default_timer as timer
 from saturn.utilities import processify
 from torchgpipe.balance import balance_by_size, balance_by_time
 from saturn.core.executors.Technique import BaseTechnique
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
 
 class PipelineExecutor(BaseTechnique):

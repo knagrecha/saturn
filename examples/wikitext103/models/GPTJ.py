@@ -517,13 +517,10 @@ def get_model():
         modules.append(GPTJOutputLayer(model.transformer.ln_f))
         modules.append(model.lm_head)
         params = sum(p.numel() for p in model.parameters())
-        print("Parameters: {}".format(params))
         model.resize_token_embeddings(50400)  # len(tokenizer) = 50400
         model = nn.Sequential(*modules)
         torch.save(model, "tmp_6b.pt")
         model
     else:
         model = torch.load("tmp_6b.pt")
-
-    print("Loaded GPT-J in {}s".format(timer()-st))
     return model
