@@ -1,6 +1,6 @@
 [![Documentation Status](https://readthedocs.org/projects/saturn/badge/?version=latest)](https://saturn.readthedocs.io/en/latest/?badge=latest)
 
-# Saturn: Optimized Multi-Model Deep Learning
+# Saturn: Optimized Training of Multiple Large Deep Learning Models
 Saturn is a novel system for multi-model deep learning training that automatically optimizes jobs for highly efficient training.
 It automatically selects parallelization techniques, determines optimized resource allocations, and constructs execution schedules
 for submitted jobs. Applying Saturn for hyperparameter optimization or model selection requires only a few lines of code.
