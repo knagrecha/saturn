@@ -328,9 +328,9 @@ def solve(task_list: List[Task], presolved=None, gurobi=True):
 
         prob.setObjective(makespan)
         if gurobi:
-            solver = GUROBI_CMD(timeLimit=500, threads=os.cpu_count() // 4, warmStart=True, msg=0)
+            solver = GUROBI_CMD(timeLimit=500, threads=os.cpu_count() // 4, warmStart=True)
         else:
-            solver = PULP_CBC_CMD(timeLimit=500, threads=os.cpu_count() // 4, warmStart=True, msg=0)
+            solver = PULP_CBC_CMD(timeLimit=500, threads=os.cpu_count() // 4, warmStart=True)
 	        
         prob.solve(solver)
         

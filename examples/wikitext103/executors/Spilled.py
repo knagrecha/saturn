@@ -21,6 +21,8 @@ import traceback
 
 
 class SpilledExecutor(BaseTechnique):
+    name = "Spilled"
+    
     def search(task, gpu, tid):
         if len(gpu) > 1:
             return None, None

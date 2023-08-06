@@ -55,12 +55,9 @@ def cleanup():
 
 
 class FSDPExecutor(BaseTechnique):
-
+    name = "FSDP"
     trial_batch_count = 2
 
-    def __init__(self):
-        super().__init__()
-        self.name = "FSDPExecutor"
 
     def execute(task: Task, gpu: List[int], tid, override_batch_count=None):
         WORLD_SIZE = len(gpu)

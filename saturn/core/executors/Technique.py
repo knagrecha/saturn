@@ -27,6 +27,7 @@ class BaseTechnique(ABC):
         on which to run them. It should run the task to completion,
         then end without return.
     """
+    name = "BaseTechnique (override when extending)"
     @staticmethod
     @abstractmethod
     def execute(self, task: Task, gpu: List[int], tid: int, override_batch_count: int) -> None:

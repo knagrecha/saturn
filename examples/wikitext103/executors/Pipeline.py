@@ -22,7 +22,8 @@ warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is
 
 
 class PipelineExecutor(BaseTechnique):
-
+    name = "Pipeline"
+    
     def execute(task, gpu, tid, override_batch_count=None):
         """ Runs a task using pipelinig with a list of GPUs"""
 

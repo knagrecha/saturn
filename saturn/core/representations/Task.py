@@ -106,7 +106,7 @@ class Task:
         self.gpu_range = gpu_range
         if name is None:
             name = ''.join(random.choices(string.ascii_uppercase +
-                                          string.digits, k=32))
+                                          string.digits, k=16))
 
         self.saved_dataloader = None
         self.name = name
@@ -145,7 +145,7 @@ class Task:
     def change_name(self, name=None):
         if name is None:
             self.name = ''.join(random.choices(string.ascii_uppercase +
-                                              string.digits, k=32))
+                                              string.digits, k=16))
 
     def save(self, model):
         print("Saving model {}/{}".format(self.save_dir, self.name))

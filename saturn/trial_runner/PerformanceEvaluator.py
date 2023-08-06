@@ -20,11 +20,11 @@ import logging
 
 @ray.remote
 def ray_search(executor, task, gpu_range, tid):
-    print("Starting Trial of Task: {}\n\tExecutor: {}\n\tGPUs: {}".format(task.name, executor, ray.get_gpu_ids()))
+    print("Starting Trial of Task: {}, Executor: {}, GPUs: {}".format(task.name, executor.name, ray.get_gpu_ids()))
     params, total_time = executor.search(task, gpu_range, tid)
     if params is not None:
         total_time = total_time * task.total_batches
-    print("Finishing Trial of Task: {}\n\tExecutor: {}\n\tGPUs: {}".format(task.name, executor, ray.get_gpu_ids()))
+    print("Finishing Trial of Task: {}, Executor: {}, GPUs: {}".format(task.name, executor.name, ray.get_gpu_ids()))
     return params, total_time
 
 

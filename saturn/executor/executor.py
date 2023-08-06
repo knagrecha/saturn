@@ -150,12 +150,10 @@ def forecast(task_list, interval, interval_sta):
 	
 	relevant_tasks = [task_list[idx]
 	                  for idx, st in enumerate(interval_sta) if st < interval]
-	expected_total_time_per_task = [
-		t.selected_strategy.runtime for t in relevant_tasks]
+	expected_total_time_per_task = [ t.selected_strategy.runtime for t in relevant_tasks ]
 	time_in_interval_per_task = [interval -
 	                             st for st in interval_sta if st < interval]
-	batch_time_per_task = [ex / t.total_batches for ex,
-	                                                t in zip(expected_total_time_per_task, relevant_tasks)]
+	batch_time_per_task = [ex / t.total_batches for ex, t in zip(expected_total_time_per_task, relevant_tasks)]
 	batches_to_run = [min(ta.total_batches, t // b)
 	                  for ta, t, b in zip(relevant_tasks, time_in_interval_per_task, batch_time_per_task)]
 	
