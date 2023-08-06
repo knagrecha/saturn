@@ -95,7 +95,7 @@ def search(tasks, executor_names=None, log=False):
         if gpu_range is None:
             gpu_range = default_gpu_range
         for g_idx, g in enumerate(gpu_range):
-            chosen_executor, chosen_parameters, chosen_runtime = None, None, None
+            chosen_executor, chosen_parameters, chosen_runtime = None, None, float("inf")
             for exec_idx, exec in enumerate(executors):
                 (params, runtime) = collected_flat_results[flat_idx]
                 flat_idx += 1
@@ -104,4 +104,4 @@ def search(tasks, executor_names=None, log=False):
                         chosen_executor = exec
                         chosen_parameters = params
                         chosen_runtime = runtime
-                        tasks[i].strategies[g] = Strategy(chosen_executor, g, chosen_parameters, chosen_runtime)
+                tasks[i].strategies[g] = Strategy(chosen_executor, g, chosen_parameters, chosen_runtime)
