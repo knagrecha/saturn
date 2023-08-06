@@ -24,6 +24,8 @@ def ray_search(executor, task, gpu_range, tid):
     params, total_time = executor.search(task, gpu_range, tid)
     if params is not None:
         total_time = total_time * task.total_batches
+    else:
+        print("Trial of Task: {}, Executor: {}, GPUs: {} failed.".format(task.name, executor.name, ray.get_gpu_ids()))
     print("Finishing Trial of Task: {}, Executor: {}, GPUs: {}".format(task.name, executor.name, ray.get_gpu_ids()))
     return params, total_time
 
@@ -87,19 +89,19 @@ def search(tasks, executor_names=None, log=False):
     collected_flat_results = ray.get(flattened_results)
     end = timer()
     logging.info("Ran {} trials in {}hrs.".format(len(flattened_results), (end-st)/3600))
-    res_per_task = len(gpu_range) * len(executors)
-    for i in range(len(tasks)):
-        task_results = collected_flat_results[i *
-                                              res_per_task: (i+1) * res_per_task]
+    flat_idx = 0
+    for i, t in enumerate(tasks):
+        gpu_range = t.gpu_range
+        if gpu_range is None:
+            gpu_range = default_gpu_range
         for g_idx, g in enumerate(gpu_range):
             chosen_executor, chosen_parameters, chosen_runtime = None, None, None
             for exec_idx, exec in enumerate(executors):
-                (params,
-                    runtime) = task_results[g_idx * len(executors) + exec_idx]
+                (params, runtime) = collected_flat_results[flat_idx]
+                flat_idx += 1
                 if params is not None:
                     if chosen_runtime is None or runtime < chosen_runtime:
                         chosen_executor = exec
                         chosen_parameters = params
                         chosen_runtime = runtime
-            tasks[i].strategies[g] = Strategy(
-                chosen_executor, g, chosen_parameters, chosen_runtime)
+                        tasks[i].strategies[g] = Strategy(chosen_executor, g, chosen_parameters, chosen_runtime)
