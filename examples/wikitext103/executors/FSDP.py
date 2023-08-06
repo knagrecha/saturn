@@ -86,15 +86,12 @@ class FSDPExecutor(BaseTechnique):
             WORLD_SIZE = len(gpu)
             m = task.get_model()
             for param in parameters_list:
-                print("Trying ", param)
                 oom = False
                 try:
                     mp.spawn(FSDPExecutor.trial, args=(
                         WORLD_SIZE, copy.deepcopy(m), task, gpu, param, q, tid), nprocs=WORLD_SIZE, join=True)
 
                     rt = q.get()
-                    print(rt)
-
                 except Exception as e:
                     oom = True
 
@@ -142,8 +139,6 @@ class FSDPExecutor(BaseTechnique):
 
             time_taken = 0
             for iter, (batch, label) in enumerate(dataloader):
-                if (rank == 0):
-                    print(iter)
                 if iter == FSDPExecutor.trial_batch_count:
                     break
                 elif iter == FSDPExecutor.trial_batch_count - 1:

@@ -98,7 +98,6 @@ class PipelineExecutor(BaseTechnique):
                     # 4 for Adam
                     # param_scale=param_scale,
                 )
-                print("Balance of {}".format(balance))
                 try:
                     gpipe_model = GPipe(
                         model, balance, chunks=proposed_microbatch_count)
@@ -139,8 +138,6 @@ class PipelineExecutor(BaseTechnique):
             pipeline_latency, new_pipeline_latency = None, None
 
             while True:
-                print("Evaluating pipelining on {} gpus with {} microbatches".format(
-                    len(gpus), proposed_microbatch_count))
 
                 new_pipeline_latency, proposed_balance = run_test(model, proposed_microbatch_count, batch,
                                                                   label, loss_fn, gpus, param_scale)
@@ -152,8 +149,7 @@ class PipelineExecutor(BaseTechnique):
                     break
 
                 pipeline_latency = new_pipeline_latency
-                print("{} microbatches achieved {}s latency".format(
-                    proposed_microbatch_count, pipeline_latency))
+
                 curr_microbatch_count = proposed_microbatch_count
                 curr_balance = proposed_balance
                 # halve the number of microbatches

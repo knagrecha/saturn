@@ -53,7 +53,7 @@ def solve(task_list: List[Task], presolved=None, gurobi=True):
     """
     
     if not ray.is_initialized():
-        context = ray.init(resources={"node_0": 10000}, configure_logging=False, logging_level="critical")  # just some arbitrarily high number
+        context = ray.init(dashboard_host="0.0.0.0", resources={"node_0": 10000}, configure_logging=False, logging_level="critical")  # just some arbitrarily high number
 
     DEBUG = True
     NODES = len(ray.nodes())

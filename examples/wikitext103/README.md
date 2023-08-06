@@ -9,9 +9,9 @@ the [requirements](./requirements.txt) file.
 
 ## Summary
 In this example, we'll run hyperparameter optimization on a batch of GPT-J models
-for the WikiText-2 dataset.
+for the WikiText-103 dataset.
 
-To run the fine-tuning script, launch ``python3 WikiText2.py``.
+To run the fine-tuning script, launch ``python3 WikiText103.py``.
 
 
 ## Walkthrough

@@ -12,7 +12,7 @@
 # ==============================================================================
 
 import torch
-from torchtext.datasets import WikiText2
+from torchtext.datasets import WikiText2, WikiText103
 from torch.utils.data import DataLoader, Subset
 import numpy as np
 import os
@@ -24,7 +24,7 @@ def collate_batch(batch):
     return batch, batch.clone()
 
 
-def load_dataset(combine=50000, split="train", tokenizer=None, cache_path=None):
+def load_dataset(combine=50000, split="train", tokenizer=None, cache_path=None, full_data=False):
     token_chunks = []
     
     if cache_path is not None:
@@ -33,8 +33,11 @@ def load_dataset(combine=50000, split="train", tokenizer=None, cache_path=None):
             for item in npz.files:
                 token_chunks.append(npz[item])
             return token_chunks
-        
-    data = WikiText2(root="data", split=split)
+    
+    if not full_data:
+        data = WikiText2(root="data", split=split)
+    else:
+        data = WikiText103(root="data", split=split)
     raw_text = ''
     
     print("Tokenizing dataset...")
@@ -52,8 +55,8 @@ def load_dataset(combine=50000, split="train", tokenizer=None, cache_path=None):
     return token_chunks
 
 
-def get_loader(batch_size, context_length=512, split="train", tokenizer=None, tok_name=None):
-    data = lazy_load(tokenizer=tokenizer, split=split, tok_name=tok_name)[0]
+def get_loader(batch_size, context_length=512, split="train", tokenizer=None, tok_name=None, full_data=False):
+    data = lazy_load(tokenizer=tokenizer, split=split, tok_name=tok_name, full_data=full_data)[0]
     # Chunk data by context_length
     ds = Subset(data, [
         slice(i, i+context_length)
@@ -64,11 +67,14 @@ def get_loader(batch_size, context_length=512, split="train", tokenizer=None, to
     return data_loader
 
 
-def lazy_load(tokenizer, split="train", tok_name="none"):
-    cache_path = 'cache_path_train_{}_{}.npz'.format(tok_name, split)
+def lazy_load(tokenizer, split="train", tok_name="none", full_data=False):
+    if not full_data:
+        cache_path = 'cache_path_train_{}_{}.npz'.format(tok_name, split)
+    else:
+        cache_path = 'cache_path_train_{}_{}_103.npz'.format(tok_name, split)
     if not os.path.exists(cache_path):
         # Set combine to a huge number so everything is 1 vector
-        data = load_dataset(combine=1e99, split=split, tokenizer=tokenizer)
+        data = load_dataset(combine=1e99, split=split, tokenizer=tokenizer, full_data=full_data)
         # Cache encoded data.
         print(f'caching data to {cache_path}')
         np.savez_compressed(cache_path, *data)

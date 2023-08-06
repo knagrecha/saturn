@@ -66,7 +66,6 @@ class DDPExecutor(BaseTechnique):
                     WORLD_SIZE, copy.deepcopy(m), task, gpu, q, tid), nprocs=WORLD_SIZE, join=True)
 
                 rt = q.get()
-                print(rt)
 
             except Exception as e:
                 oom = True
@@ -101,8 +100,6 @@ class DDPExecutor(BaseTechnique):
 
             time_taken = 0
             for iter, (batch, label) in enumerate(dataloader):
-                if (rank == 0):
-                    print(iter)
                 if iter == DDPExecutor.trial_batch_count:
                     break
                 elif iter == DDPExecutor.trial_batch_count - 1:

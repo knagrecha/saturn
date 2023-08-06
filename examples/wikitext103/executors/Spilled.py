@@ -25,8 +25,6 @@ class SpilledExecutor(BaseTechnique):
         if len(gpu) > 1:
             return None, None
         try:
-            max_trials = 100
-
             g = gpu[0]
             model, iterator, loss_fn = task.get_model(
             ), task.get_fresh_iterator(), task.loss_function
@@ -39,7 +37,7 @@ class SpilledExecutor(BaseTechnique):
             # we subprocess it because PyTorch CUDA alloc is messy, and doesn't cleanup fully on dels.
             # this is slow! Which makes it all the more critical we address
             # todo item 2.
-            @processify
+            # @processify
             def run_test(model, gpu, partition_count, test_batch, test_label):
                 try:
                     # TODO: optimize microbatch count selection
