@@ -72,13 +72,13 @@ class TestPerformanceEvaluator(unittest.TestCase):
 					        tok_name='gpt-j',
 					        full_data=False),
 					pretraining_loss,
-					hparams=HParams(lr=lr, batch_count=500, optimizer_cls=torch.optim.SGD),
+					hparams=HParams(lr=lr, epochs=1, optimizer_cls=torch.optim.SGD),
 					hints={"is_transformer": True, "transformer_cls": {GPTJBlock, GPTJMLP}},
 				) for x in range(2)
 			]
 
 	def test(self):
-		search(self.test_tasks, log=True, executor_names=["SpilledExecutor"])
+		search(self.test_tasks, log=True)
 		
 		for i in self.test_tasks:
 			for gpu_count, strat in i.strategies.items():

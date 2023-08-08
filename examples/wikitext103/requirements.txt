@@ -3,3 +3,4 @@ torchdata
 fairscale
 torchgpipe
 transformers
+portalocker

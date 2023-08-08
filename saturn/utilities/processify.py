@@ -18,7 +18,6 @@ from functools import wraps
 import traceback
 from multiprocessing import Queue, Process
 
-
 def processify(func):
     '''Decorator to run a function as a process.
     Be sure that every argument and the return value
