@@ -11,9 +11,8 @@ advances in model execution optimizations without having to wait for library upd
 
 ### Install Saturn
 
-To install Saturn, please read the [instructions](INSTALL.md). We are currently working on building pre-built Docker
-packages for quick start scenarios. We're always excited to hear about new use cases and details of your experience with Saturn, so feel free
-to contact us at knagrech@ucsd.edu.
+To install Saturn, please read the [instructions](INSTALL.md). We're always excited to hear about new use cases and details of your experience with Saturn, so feel free
+to contact us at knagrech@ucsd.edu if you want to share news.
 
 ### Framework Support
 
