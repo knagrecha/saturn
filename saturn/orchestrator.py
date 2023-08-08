@@ -19,8 +19,8 @@ import os
 
 
 @ray.remote(num_cpus=max(1, os.cpu_count() // 4))
-def ray_solve(task_list, presolved=None, interval=1000, timeout=500, threads=os.cpu_count() // 4):
-    return solve(task_list, presolved, threads=threads, interval=interval, timeout=timeout)
+def ray_solve(task_list, presolved=None, gurobi=True, interval=1000, timeout=500, threads=os.cpu_count() // 4):
+    return solve(task_list, presolved, gurobi=gurobi, threads, interval=interval, timeout=timeout)
 
 
 """
@@ -29,7 +29,7 @@ def ray_solve(task_list, presolved=None, interval=1000, timeout=500, threads=os.
 """
 
 
-def orchestrate(task_list, log=False, interval=1000):
+def orchestrate(task_list, log=False, interval=1000, gurobi=True):
     """
         Primary entry-point for job submission and execution.
         
@@ -66,7 +66,7 @@ def orchestrate(task_list, log=False, interval=1000):
         logging.info("Launching {} in this interval.".format([t.name for t in rtt]))
         logging.info("Forecasting that {} will finish in this interval.".format([t.name for t in cmp]))
         task_list = [t for t in task_list if t not in cmp]
-        res = ray_solve.remote(task_list, presolved, interval, interval//2)
+        res = ray_solve.remote(task_list, presolved, gurobi, interval, interval//2)
         execute(rtt, btr, interval, npt, tdd)
         presolved = ray.get(res)
         interval_sta, interval_tga, interval_bss, interval_bna, interval_boa, saved_makespan = presolved

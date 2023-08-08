@@ -149,4 +149,4 @@ class SpilledExecutor(BaseTechnique):
 
         except Exception as e:
             raise e
-        task.save(model)
+        task.save(model.state_dict())
