@@ -20,7 +20,7 @@ import os
 
 @ray.remote(num_cpus=max(1, os.cpu_count() // 4))
 def ray_solve(task_list, presolved=None, gurobi=True, interval=1000, timeout=500, threads=os.cpu_count() // 4):
-    return solve(task_list, presolved, gurobi=gurobi, threads, interval=interval, timeout=timeout)
+    return solve(task_list, presolved, gurobi=gurobi, threads=threads, interval=interval, timeout=timeout)
 
 
 """
