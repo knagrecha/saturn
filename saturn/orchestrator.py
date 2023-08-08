@@ -19,8 +19,8 @@ import os
 
 
 @ray.remote(num_cpus=max(1, os.cpu_count() // 4))
-def ray_solve(task_list, presolved=None):
-    return solve(task_list, presolved)
+def ray_solve(task_list, presolved=None, interval=1000, timeout=500, threads=os.cpu_count() // 4):
+    return solve(task_list, presolved, threads=threads, interval=interval, timeout=timeout)
 
 
 """
@@ -52,8 +52,7 @@ def orchestrate(task_list, log=False, interval=1000):
     else:
         logging.basicConfig(level=logging.WARNING)
     
-    INTERVAL = interval
-    res = ray_solve.remote(task_list)
+    res = ray_solve.options(num_cpus=os.cpu_count()).remote(task_list, None, interval, interval//2, os.cpu_count())
     presolved = ray.get(res)  # initial pass, need MILP up front
     interval_sta, interval_tga, interval_bss, interval_bna, interval_boa, saved_makespan = presolved
     
@@ -63,13 +62,14 @@ def orchestrate(task_list, log=False, interval=1000):
 
 
     while len(task_list) > 0:
-        rtt, btr, cmp = forecast(task_list, INTERVAL, sta_comp)
+        rtt, btr, cmp = forecast(task_list, interval, sta_comp)
         logging.info("Launching {} in this interval.".format([t.name for t in rtt]))
         logging.info("Forecasting that {} will finish in this interval.".format([t.name for t in cmp]))
         task_list = [t for t in task_list if t not in cmp]
-        res = ray_solve.remote(task_list, presolved)
-        execute(rtt, btr, INTERVAL, npt, tdd)
+        res = ray_solve.remote(task_list, presolved, interval, interval//2)
+        execute(rtt, btr, interval, npt, tdd)
         presolved = ray.get(res)
         interval_sta, interval_tga, interval_bss, interval_bna, interval_boa, saved_makespan = presolved
+        
         npt, tdd, sta_comp = convert_into_comprehensible(
             task_list, interval_bss, interval_boa, interval_tga, interval_bna, interval_sta)

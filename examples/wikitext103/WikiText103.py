@@ -38,10 +38,6 @@ class TestPerformanceEvaluator(unittest.TestCase):
             Configuring hints & tokenizers for the GPT-2 & GPT-J jobs
         """
 		
-		gptjhints = {"is_transformer": True,
-		             "transformer_cls": {GPTJBlock, GPTJMLP}}
-		
-
 		gptJTokenizer = AutoTokenizer.from_pretrained(
 			"EleutherAI/gpt-j-6B")  # gpt2-xl-medium
 		if gptJTokenizer.pad_token is None:
@@ -54,7 +50,8 @@ class TestPerformanceEvaluator(unittest.TestCase):
 		self.classes = [FSDPExecutor, PipelineExecutor, SpilledExecutor]
 		self.class_names = ["FSDPExecutor",
 		                    "PipelineExecutor", "SpilledExecutor"]
-		
+
+
 		for c_name, c in zip(self.class_names, self.classes):
 			register(c_name, c)
 		
@@ -65,8 +62,6 @@ class TestPerformanceEvaluator(unittest.TestCase):
 		"""
 		
 		for lr in [1e-5]:
-			hparams = HParams(lr=lr, batch_count=500, optimizer_cls=torch.optim.SGD)
-			
 			self.test_tasks += [
 				Task(
 					getGPTJ,
@@ -77,13 +72,23 @@ class TestPerformanceEvaluator(unittest.TestCase):
 					        tok_name='gpt-j',
 					        full_data=False),
 					pretraining_loss,
-					hparams=copy.deepcopy(hparams),
-					hints=copy.deepcopy(gptjhints),
+					hparams=HParams(lr=lr, batch_count=500, optimizer_cls=torch.optim.SGD),
+					hints={"is_transformer": True, "transformer_cls": {GPTJBlock, GPTJMLP}},
 				) for x in range(2)
 			]
 
 	def test(self):
-		search(self.test_tasks, log=True)
+		search(self.test_tasks, log=True, executor_names=self.class_names)
+		
+		for i in self.test_tasks:
+			for gpu_count, strat in i.strategies.items():
+				print("Task: {}".format(i.name))
+				print("GPUs: {}".format(gpu_count))
+				if strat.executor is not None:
+					print("Executor: {}".format(strat.executor.name))
+				else:
+					print("Executor: {}".format(None))
+		
 		batch_2 = copy.deepcopy(self.test_tasks)
 		
 		
@@ -98,7 +103,8 @@ class TestPerformanceEvaluator(unittest.TestCase):
 		
 		self.test_tasks += batch_2
 		self.test_tasks += batch_3
-		orchestrate(self.test_tasks, log=True)
+		
+		orchestrate(self.test_tasks, log=True, interval=1000)
 
 if __name__ == '__main__':
 	unittest.main()

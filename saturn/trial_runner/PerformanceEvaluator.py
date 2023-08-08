@@ -90,18 +90,28 @@ def search(tasks, executor_names=None, log=False):
     end = timer()
     logging.info("Ran {} trials in {}hrs.".format(len(flattened_results), (end-st)/3600))
     flat_idx = 0
+    """
+        Initialize
+    """
+    for i, t in enumerate(tasks):
+        gpu_range = default_gpu_range
+        for g_idx, g in enumerate(gpu_range):
+            tasks[i].strategies[g] = Strategy(None, g, None, 1000000)
+    
     for i, t in enumerate(tasks):
         gpu_range = t.gpu_range
         if gpu_range is None:
             gpu_range = default_gpu_range
         for g_idx, g in enumerate(gpu_range):
-            chosen_executor, chosen_parameters, chosen_runtime = None, None, float("inf")
+            chosen_executor, chosen_parameters, chosen_runtime = None, None, 1000000 # impossibly high, but not higher than M in the MILP.
             for exec_idx, exec in enumerate(executors):
                 (params, runtime) = collected_flat_results[flat_idx]
                 flat_idx += 1
                 if params is not None:
-                    if chosen_runtime == float("inf") or runtime < chosen_runtime:
+                    if runtime < chosen_runtime:
                         chosen_executor = exec
                         chosen_parameters = params
                         chosen_runtime = runtime
-                tasks[i].strategies[g] = Strategy(chosen_executor, g, chosen_parameters, chosen_runtime)
+            tasks[i].strategies[g] = Strategy(chosen_executor, g, chosen_parameters, chosen_runtime)
+            
+    
