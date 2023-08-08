@@ -78,7 +78,7 @@ class TestPerformanceEvaluator(unittest.TestCase):
 			]
 
 	def test(self):
-		search(self.test_tasks, log=True, executor_names=self.class_names)
+		search(self.test_tasks, log=True)
 		
 		for i in self.test_tasks:
 			for gpu_count, strat in i.strategies.items():

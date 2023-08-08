@@ -112,7 +112,6 @@ class SpilledExecutor(BaseTechnique):
     @processify
     def execute(task, gpu, tid, override_batch_count=None):
         try:
-            task.setup()
             """ Runs a task using spilling with a list of GPUs"""
 
             gpu = torch.device('cuda', gpu[0])
