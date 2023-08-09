@@ -19,9 +19,18 @@ the procedure [here](https://support.gurobi.com/hc/en-us/articles/360044290292-H
 and acquire a license for usage. You will also need to follow any additional requirements for PuLP solver configuration
 listed [here](https://coin-or.github.io/pulp/guides/how_to_configure_solvers.html). 
 
-IMPORTANT: It is highly recommended to use the conda installation of Gurobi instead
+IMPORTANT: It is highly recommended to use the [conda installation of Gurobi](https://support.gurobi.com/hc/en-us/articles/12872889819921-How-do-I-use-conda-to-install-Gurobi-in-Anaconda-) instead
 rather than the pip installation. The conda version integrates better with APIs like PuLP to record variables in Python
 for use in Saturn's executor.
+
+To verify Gurobi is installed correctly and ready for Saturn, run the following commands in a Python3 interpreter:
+
+```
+import pulp
+pulp.listSolvers(onlyAvailable=True)
+```
+
+Verify that 'GUROBI_CMD' is in the resultant list.
 
 We are actively working on building a minimal-dependency version of Saturn that will have its own solver rather than relying on Gurobi.
 We welcome contributions, so feel free to make a PR!
