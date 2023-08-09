@@ -70,7 +70,7 @@ class TestPerformanceEvaluator(unittest.TestCase):
 					        split="train",
 					        tokenizer=gptJTokenizer,
 					        tok_name='gpt-j',
-					        full_data=False),
+					        full_data=True),
 					pretraining_loss,
 					hparams=HParams(lr=lr, epochs=1, optimizer_cls=torch.optim.SGD),
 					hints={"is_transformer": True, "transformer_cls": {GPTJBlock, GPTJMLP}},

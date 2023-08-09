@@ -160,7 +160,7 @@ def solve(task_list: List[Task], presolved=None, gurobi=True, threads=os.cpu_cou
 		"""
 		
 		makespan = LpVariable("Makespan", 0)
-		M = 1e8 # wish it could be bigger, but IntFeasTol for Gurobi is 1e-9. err on the side of caution.
+		M = 1e10 # wish it could be bigger, but IntFeasTol for Gurobi is 1e-9. err on the side of caution.
 		
 		"""
 			Makespan must be higher than start time + time of the selected strategy

@@ -103,7 +103,7 @@ def search(tasks, executor_names=None, log=False):
         if gpu_range is None:
             gpu_range = default_gpu_range
         for g_idx, g in enumerate(gpu_range):
-            chosen_executor, chosen_parameters, chosen_runtime = None, None, 1000000 # impossibly high, but not higher than M in the MILP.
+            chosen_executor, chosen_parameters, chosen_runtime = None, None, 1e8 # impossibly high, but not higher than M in the MILP.
             for exec_idx, exec in enumerate(executors):
                 (params, runtime) = collected_flat_results[flat_idx]
                 flat_idx += 1
