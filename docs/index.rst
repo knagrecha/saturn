@@ -5,6 +5,8 @@
 
 Saturn: A Multi-Query Optimizer for Deep Learning
 ==================================================
+.. raw:: html
+    :file: buttons.html
 
 .. toctree::
    :maxdepth: 2
