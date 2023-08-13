@@ -6,7 +6,7 @@ saturn.executor.executor
 -------------------------------
 
 .. automodule:: saturn.executor.executor
-   :members: execute, ray_execute, forecast
+   :members: execute, forecast
    :undoc-members:
    :show-inheritance:
 
