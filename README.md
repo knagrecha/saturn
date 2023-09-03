@@ -5,9 +5,14 @@ Saturn is a novel system for multi-model deep learning training that automatical
 It automatically selects parallelization techniques, determines optimized resource allocations, and constructs execution schedules
 for submitted jobs. Applying Saturn for hyperparameter optimization or model selection requires only a few lines of code.
 
+![Hydra_Summary_Figure (1)](https://github.com/knagrecha/saturn/assets/32966638/ecd6742e-1f33-4d76-a9da-e7c57bb9ad1f)
+
 Saturn is designed to support extensibility, allowing users to specify new execution procedures that can be
 included in its optimization plan and search space. In this way, you can keep up with the latest
 advances in model execution optimizations without having to wait for library updates & changes.
+
+![Hydra Figures (1)](https://github.com/knagrecha/saturn/assets/32966638/ef1f5787-0eb6-482b-849c-1d778b8c7488)
+
 
 ### Install Saturn
 
