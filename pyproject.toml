@@ -129,7 +129,7 @@ test = ["coverage"]
 # maintainers, and where to support the project financially. The key is
 # what's used to render the link text on PyPI.
 [project.urls]  # Optional
-"Homepage" = "https://github.com/pypa/sampleproject"
+"Homepage" = "https://github.com/knagrecha/saturn"
 
 
 [build-system]
