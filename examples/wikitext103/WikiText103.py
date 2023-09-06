@@ -12,15 +12,15 @@
 # ==============================================================================
 
 
-from examples.wikitext103.models.GPTJ import get_model as getGPTJ, GPTJBlock, GPTJMLP, pretraining_loss
+from models.GPTJ import get_model as getGPTJ, GPTJBlock, GPTJMLP, pretraining_loss
 
-from examples.wikitext103.dataloaders import get_loader
+from dataloaders import get_loader
 from saturn.core.representations import Task, HParams
 from transformers import AutoTokenizer
 
-from examples.wikitext103.executors.FSDP import FSDPExecutor
-from examples.wikitext103.executors.Pipeline import PipelineExecutor
-from examples.wikitext103.executors.Spilled import SpilledExecutor
+from executors.FSDP import FSDPExecutor
+from executors.Pipeline import PipelineExecutor
+from executors.Spilled import SpilledExecutor
 import unittest
 from saturn.library import register
 
@@ -50,7 +50,7 @@ def setup_tasks():
 	class_names = ["FSDPExecutor", "PipelineExecutor", "SpilledExecutor"]
 
 
-	for c_name, c in zip(self.class_names, self.classes):
+	for c_name, c in zip(class_names, classes):
 		register(c_name, c)
 	
 	test_tasks = []
