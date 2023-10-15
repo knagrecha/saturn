@@ -36,6 +36,6 @@ We are actively working on building a minimal-dependency version of Saturn that 
 We welcome contributions, so feel free to make a PR!
 
 ## Verification
-To verify your installation, you can run the ``wikitext2/simple-verification.py`` script in the examples directory. 
+To verify your installation, you can run the ``examples/wikitext103/simple-verification.py`` script. 
 This will run a toy HPO sweep to confirm that everything is working. You will need to specify the environment
 variable SATURN_LIBRARY_PATH so that Saturn knows where to store registered execution techniques.
