@@ -29,6 +29,11 @@ We welcome contributions to Saturn. Areas of particular interest are an alternat
 new interfaces, dashboards, and ways to support online job submissions. Please let us know if you encounter any bugs
 or have any suggestions by submitting an issue.
 
+You can join the Slack here: https://join.slack.com/t/saturn-dl/shared_invite/zt-267mfi3s4-ifUYLiJUtaVeGFcYe9vbxA or by scanning this QR code:
+
+<img width="290" alt="slack" src="https://github.com/ollie-robin/saturn/assets/105469320/bcc1421c-1aec-486f-8520-cfccffb9f3da">
+
+
 
 ## Documentation
 [You can find the docs for Saturn here](https://saturn.readthedocs.io/en/latest/).
