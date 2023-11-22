@@ -48,7 +48,7 @@ def solve(task_list: List[Task], presolved=None, threads=os.cpu_count() // 4, in
 		context = ray.init(dashboard_host="0.0.0.0", resources={"node_0": 10000}, configure_logging=False,
 		                   logging_level="critical")  # just some arbitrarily high number
 	
-	DEBUG = True
+	DEBUG = False
 	NODES = len(ray.nodes())
 	if not DEBUG:
 		gpus_per_node = [int(x['Resources']['GPU']) for x in ray.nodes()]
@@ -58,8 +58,21 @@ def solve(task_list: List[Task], presolved=None, threads=os.cpu_count() // 4, in
 	"""
 		Setup phase
 	"""
+	
 	TASK_COUNT = len(task_list)
 	node_gpu_array = gpus_per_node
+
+	# RL Solver setup, using https://pytorch.org/rl/tutorials/coding_ppo.html
+	num_cells = 256  # number of cells in each layer i.e. output dim.
+	lr = 3e-4
+	max_grad_norm = 1.0
+
+	frame_skip = 1
+	frames_per_batch = 1000 // frame_skip
+	# For a complete training, bring the number of frames up to 1M
+	total_frames = 10_000 // frame_skip
+	
+	
 	
 	gpu_time_tuples = []
 	
