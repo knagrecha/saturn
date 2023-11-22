@@ -20,21 +20,14 @@ import ray
 import os
 
 
-def solve(task_list: List[Task], presolved=None, gurobi=True, threads=os.cpu_count() // 4, interval=1000, timeout=500):
+def solve(task_list: List[Task], presolved=None, threads=os.cpu_count() // 4, interval=1000, timeout=500):
 	"""
-		The MILP-based solver at the core of Saturn. Currently relies on Gurobi
-		for plan construction, but we are actively looking into alternatives that do not
-		require external dependencies. For now, if you do not have access to a Gurobi license,
-		set the gurobi parameter to False. In this case, Saturn will use the open-source
-		CBC solver from PuLP. Note that this is generally significantly slower than
-		Gurobi, so your runtimes & query execution plan quality may suffer as a result.
+		An RL-based solver for Saturn's SPASE problem. Eliminates the Gurobi dependency.
 
 		Parameters:
 			task_list: A list of all tasks.
 
 			presolved: Used for warm-starting in our introspection/interval-based solving scheme.
-
-			gurobi: Whether or not to use the Gurobi solver. If set to false, will use a slower, open-source alternative.
 
 		Returns:
 			interval_sta: Start time array for the current interval.
