@@ -22,7 +22,8 @@ import os
 
 def solve(task_list: List[Task], presolved=None, threads=os.cpu_count() // 4, interval=1000, timeout=500):
 	"""
-		An RL-based solver for Saturn's SPASE problem. Eliminates the Gurobi dependency.
+		An RL-based solver for Saturn's SPASE problem. Lightweight enough to run on CPUs in parallel.
+  
 
 		Parameters:
 			task_list: A list of all tasks.
